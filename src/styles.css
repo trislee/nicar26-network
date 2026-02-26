@@ -126,7 +126,7 @@ body {
   flex-direction: column;
   align-items: flex-start;
   max-width: calc(100vw - var(--panels-width) - 3 * var(--stage-padding));
-  padding: var(--stage-padding);
+  padding: var(--stage-padding) var(--stage-padding) var(--stage-padding) 1.5em;
 }
 
 /* When the graph is fullscreen, keep light mode (no black background / white edges) */
@@ -396,7 +396,7 @@ ul > li {
   outline: none;
   border-radius: var(--border-radius);
   padding: 0.5em 1em;
-  font-size: 0.9em;
+  font-size: 1em;
   font-family: "Public Sans", sans-serif;
   cursor: pointer;
   transition: var(--transition);
@@ -500,6 +500,9 @@ ul > li {
     padding: 0 1em;
     position: absolute;
     background: rgba(255, 255, 255, 0.8) !important;
+  }
+  .graph-title {
+    padding-left: 1em;
   }
   .navbar-title {
     font-size: 1.2em;

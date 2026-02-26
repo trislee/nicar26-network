@@ -97,7 +97,7 @@ const DescriptionPanel: FC<{ activeTab: "speakers" | "descriptions" }> = ({ acti
       initiallyDeployed
       title={
         <>
-          <BsInfoCircle className="text-muted" /> Description
+          <BsInfoCircle className="text-muted" /> About
         </>
       }
     >
