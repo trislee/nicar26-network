@@ -19,8 +19,7 @@ import GraphTitle from "./GraphTitle";
 import SearchField from "./SearchField";
 import Navbar from "./Navbar";
 import About from "./About";
-
-const IS_MOBILE = typeof window !== "undefined" && window.matchMedia("(max-width: 767.98px)").matches;
+import { IS_MOBILE } from "../is-mobile";
 
 const Root: FC = () => {
   const graph = useMemo(() => new Graph(), []);

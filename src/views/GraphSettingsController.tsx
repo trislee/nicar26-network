@@ -3,11 +3,11 @@ import { Attributes } from "graphology-types";
 import { FC, PropsWithChildren, useEffect } from "react";
 
 import { drawHover, drawLabel } from "../canvas-utils";
+import { IS_MOBILE } from "../is-mobile";
 import useDebounce from "../use-debounce";
 
 const NODE_FADE_COLOR = "#bbb";
 const EDGE_FADE_COLOR = "#eee";
-const IS_MOBILE = typeof window !== "undefined" && window.matchMedia("(max-width: 767.98px)").matches;
 
 const GraphSettingsController: FC<PropsWithChildren<{ hoveredNode: string | null }>> = ({ children, hoveredNode }) => {
   const sigma = useSigma();
