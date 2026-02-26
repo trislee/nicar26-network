@@ -24,8 +24,13 @@ const GraphDataController: FC<PropsWithChildren<{ dataset: Dataset | null; filte
     );
     dataset.edges.forEach(([source, target]) => graph.addEdge(source, target, { size: 1 }));
 
+    // Set custom bbox if provided (after nodes are added)
+    if (dataset.bbox && typeof (sigma as any).setCustomBBox === "function") {
+      (sigma as any).setCustomBBox(dataset.bbox);
+    }
+
     return () => graph.clear();
-  }, [graph, dataset]);
+  }, [graph, dataset, sigma]);
 
   /**
    * Apply filters to graphology:

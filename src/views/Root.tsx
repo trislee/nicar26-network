@@ -1,6 +1,6 @@
 import { FullScreenControl, SigmaContainer, ZoomControl } from "@react-sigma/core";
 import { createNodeImageProgram } from "@sigma/node-image";
-import { DirectedGraph } from "graphology";
+import Graph from "graphology";
 import { constant, keyBy, mapValues, omit } from "lodash";
 import { FC, useEffect, useMemo, useState } from "react";
 import { BiBookContent, BiRadioCircleMarked } from "react-icons/bi";
@@ -21,7 +21,7 @@ import Navbar from "./Navbar";
 import About from "./About";
 
 const Root: FC = () => {
-  const graph = useMemo(() => new DirectedGraph(), []);
+  const graph = useMemo(() => new Graph(), []);
   const [showContents, setShowContents] = useState(false);
   const [dataReady, setDataReady] = useState(false);
   const [dataset, setDataset] = useState<Dataset | null>(null);
@@ -40,7 +40,6 @@ const Root: FC = () => {
       defaultDrawNodeLabel: drawLabel,
       defaultDrawNodeHover: drawHover,
       defaultNodeType: "image",
-      defaultEdgeType: "arrow",
       labelDensity: 0.07,
       labelGridCellSize: 60,
       labelRenderedSizeThreshold: dataset?.labelThreshold || 15,
