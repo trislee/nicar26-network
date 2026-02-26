@@ -21,7 +21,7 @@ const ClustersPanel: FC<{
     const index: Record<string, number> = {};
     graph.forEachNode((_, { cluster }) => (index[cluster] = (index[cluster] || 0) + 1));
     return index;
-  }, []);
+  }, [graph, clusters]);
 
   const maxNodesPerCluster = useMemo(() => Math.max(...values(nodesPerCluster)), [nodesPerCluster]);
   const visibleClustersCount = useMemo(() => Object.keys(filters.clusters).length, [filters]);

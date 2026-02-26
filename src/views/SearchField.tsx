@@ -1,6 +1,6 @@
 import { useSigma } from "@react-sigma/core";
 import { Attributes } from "graphology-types";
-import { ChangeEvent, FC, KeyboardEvent, useEffect, useState } from "react";
+import { ChangeEvent, FC, KeyboardEvent, useCallback, useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 
 import { FiltersState } from "../types";
@@ -18,7 +18,7 @@ const SearchField: FC<{ filters: FiltersState }> = ({ filters }) => {
   const [values, setValues] = useState<Array<{ id: string; label: string }>>([]);
   const [selected, setSelected] = useState<string | null>(null);
 
-  const refreshValues = () => {
+  const refreshValues = useCallback(() => {
     const newValues: Array<{ id: string; label: string }> = [];
     const lcSearch = search.toLowerCase();
     if (!selected && search.length > 1) {
@@ -28,15 +28,15 @@ const SearchField: FC<{ filters: FiltersState }> = ({ filters }) => {
       });
     }
     setValues(newValues);
-  };
+  }, [search, selected, sigma]);
 
   // Refresh values when search is updated:
-  useEffect(() => refreshValues(), [search]);
+  useEffect(() => refreshValues(), [refreshValues]);
 
-  // Refresh values when filters are updated (but wait a frame first):
+  // Refresh values when filters are updated (but wait a frame so graph "hidden" is current):
   useEffect(() => {
     requestAnimationFrame(refreshValues);
-  }, [filters]);
+  }, [filters, refreshValues]);
 
   useEffect(() => {
     if (!selected) return;

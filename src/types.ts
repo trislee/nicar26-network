@@ -19,7 +19,7 @@ export interface Dataset {
   nodes: NodeData[];
   edges: [string, string][];
   clusters: Cluster[];
-  bbox: {'x': Extent, 'y': Extent};
+  bbox?: { x: Extent; y: Extent };
   labelThreshold: number;
 }
 

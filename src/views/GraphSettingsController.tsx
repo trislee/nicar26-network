@@ -20,17 +20,19 @@ const GraphSettingsController: FC<PropsWithChildren<{ hoveredNode: string | null
   const debouncedHoveredNode = useDebounce(hoveredNode, 40);
 
   /**
-   * Initialize here settings that require to know the graph and/or the sigma
-   * instance:
+   * Set reducers and draw functions when hover state or graph changes.
+   * Using setSettings once keeps reducers in sync and avoids duplicate work.
    */
   useEffect(() => {
     const hoveredColor: string = (debouncedHoveredNode && sigma.getNodeDisplayData(debouncedHoveredNode)?.color) || "";
+    const displaySizeMultiplier = IS_MOBILE ? 0.5 : 1;
+    const edgeHighlightSize = IS_MOBILE ? EDGE_SIZE_HIGHLIGHT * 0.5 : EDGE_SIZE_HIGHLIGHT;
 
     setSettings({
       defaultDrawNodeLabel: drawLabel,
       defaultDrawNodeHover: drawHover,
       nodeReducer: (node: string, data: Attributes) => {
-        const displaySize = IS_MOBILE ? (data.size ?? 1) * 0.5 : data.size;
+        const displaySize = (data.size ?? 1) * displaySizeMultiplier;
         if (debouncedHoveredNode) {
           return node === debouncedHoveredNode ||
             graph.hasEdge(node, debouncedHoveredNode) ||
@@ -41,44 +43,7 @@ const GraphSettingsController: FC<PropsWithChildren<{ hoveredNode: string | null
         return { ...data, size: displaySize };
       },
       edgeReducer: (edge: string, data: Attributes) => {
-        const displaySize = IS_MOBILE ? (data.size ?? 1) * 0.5 : data.size;
-        const highlightSize = IS_MOBILE ? EDGE_SIZE_HIGHLIGHT * 0.5 : EDGE_SIZE_HIGHLIGHT;
-        if (debouncedHoveredNode) {
-          return graph.hasExtremity(edge, debouncedHoveredNode)
-            ? { ...data, color: hoveredColor, size: highlightSize }
-            : { ...data, color: EDGE_FADE_COLOR, hidden: true };
-        }
-        return { ...data, size: displaySize };
-      },
-    });
-  }, [sigma, graph, debouncedHoveredNode]);
-
-  /**
-   * Update node and edge reducers when a node is hovered, to highlight its
-   * neighborhood:
-   */
-  useEffect(() => {
-    const hoveredColor: string = (debouncedHoveredNode && sigma.getNodeDisplayData(debouncedHoveredNode)?.color) || "";
-
-    sigma.setSetting(
-      "nodeReducer",
-      (node: string, data: Attributes) => {
-        const displaySize = IS_MOBILE ? (data.size ?? 1) * 0.5 : data.size;
-        if (debouncedHoveredNode) {
-          return node === debouncedHoveredNode ||
-            graph.hasEdge(node, debouncedHoveredNode) ||
-            graph.hasEdge(debouncedHoveredNode, node)
-              ? { ...data, zIndex: 1, size: displaySize }
-              : { ...data, zIndex: 0, label: "", color: NODE_FADE_COLOR, highlighted: false, size: displaySize };
-        }
-        return { ...data, size: displaySize };
-      },
-    );
-    const edgeHighlightSize = IS_MOBILE ? EDGE_SIZE_HIGHLIGHT * 0.5 : EDGE_SIZE_HIGHLIGHT;
-    sigma.setSetting(
-      "edgeReducer",
-      (edge: string, data: Attributes) => {
-        const displaySize = IS_MOBILE ? (data.size ?? 1) * 0.5 : data.size;
+        const displaySize = (data.size ?? 1) * displaySizeMultiplier;
         if (debouncedHoveredNode) {
           return graph.hasExtremity(edge, debouncedHoveredNode)
             ? { ...data, color: hoveredColor, size: edgeHighlightSize }
@@ -86,8 +51,8 @@ const GraphSettingsController: FC<PropsWithChildren<{ hoveredNode: string | null
         }
         return { ...data, size: displaySize };
       },
-    );
-  }, [sigma, graph, debouncedHoveredNode]);
+    });
+  }, [sigma, graph, debouncedHoveredNode, setSettings]);
 
   return <>{children}</>;
 };
