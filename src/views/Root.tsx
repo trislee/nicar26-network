@@ -40,6 +40,8 @@ const Root: FC = () => {
       defaultDrawNodeLabel: drawLabel,
       defaultDrawNodeHover: drawHover,
       defaultNodeType: "image",
+      defaultEdgeColor: "#999",
+      labelColor: { color: "#000" },
       labelDensity: 0.07,
       labelGridCellSize: 60,
       labelRenderedSizeThreshold: dataset?.labelThreshold || 15,

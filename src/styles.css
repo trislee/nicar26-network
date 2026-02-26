@@ -80,6 +80,7 @@ body {
 .sigma-container {
   position: absolute;
   inset: 0;
+  background: white;
 }
 .about-page {
   position: absolute;
@@ -128,11 +129,17 @@ body {
   padding: var(--stage-padding);
 }
 
-/* When the graph is fullscreen, remove navbar offset for the title */
-.sigma-container:fullscreen .graph-title {
-  top: var(--stage-padding);
+/* When the graph is fullscreen, keep light mode (no black background / white edges) */
+.sigma-container:fullscreen,
+.sigma-container:-webkit-full-screen {
+  background: white !important;
 }
-.sigma-container:-webkit-full-screen .graph-title {
+
+/* When the graph is fullscreen, remove navbar offset for the title (no navbar in fullscreen) */
+.sigma-container:fullscreen .graph-title,
+.sigma-container:-webkit-full-screen .graph-title,
+:fullscreen .graph-title,
+:-webkit-full-screen .graph-title {
   top: var(--stage-padding);
 }
 .graph-title h2,
