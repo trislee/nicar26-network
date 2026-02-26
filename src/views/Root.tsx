@@ -127,68 +127,68 @@ const Root: FC = () => {
         <GraphEventsController setHoveredNode={setHoveredNode} />
         <GraphDataController dataset={dataset} filters={filtersState} />
 
-        {dataReady && (
-          <>
-            <div className="controls">
-              <div className="react-sigma-control ico">
-                <button
-                  type="button"
-                  className="show-contents"
-                  onClick={() => setShowContents(true)}
-                  title="Show caption and description"
-                >
-                  <BiBookContent />
-                </button>
-              </div>
-              <FullScreenControl className="ico">
-                <BsArrowsFullscreen />
-                <BsFullscreenExit />
-              </FullScreenControl>
+        <div className="controls">
+          <div className="react-sigma-control ico">
+            <button
+              type="button"
+              className="show-contents"
+              onClick={() => setShowContents(true)}
+              title="Show caption and description"
+            >
+              <BiBookContent />
+            </button>
+          </div>
+          <FullScreenControl className="ico">
+            <BsArrowsFullscreen />
+            <BsFullscreenExit />
+          </FullScreenControl>
 
-              <ZoomControl className="ico">
-                <BsZoomIn />
-                <BsZoomOut />
-                <BiRadioCircleMarked />
-              </ZoomControl>
+          <ZoomControl className="ico">
+            <BsZoomIn />
+            <BsZoomOut />
+            <BiRadioCircleMarked />
+          </ZoomControl>
+        </div>
+        <div className="contents">
+          {dataReady && (
+            <div className="ico">
+              <button
+                type="button"
+                className="ico hide-contents"
+                onClick={() => setShowContents(false)}
+                title="Show caption and description"
+              >
+                <GrClose />
+              </button>
             </div>
-            <div className="contents">
-              <div className="ico">
-                <button
-                  type="button"
-                  className="ico hide-contents"
-                  onClick={() => setShowContents(false)}
-                  title="Show caption and description"
-                >
-                  <GrClose />
-                </button>
-              </div>
-              <GraphTitle filters={filtersState} activeTab={activeTab} />
-              <div className="panels">
-                <SearchField filters={filtersState} />
-                <DescriptionPanel activeTab={activeTab} />
-                <ClustersPanel
-                  clusters={dataset.clusters}
-                  filters={filtersState}
-                  setClusters={(clusters) =>
-                    setFiltersState((filters) => ({
-                      ...filters,
-                      clusters,
-                    }))
-                  }
-                  toggleCluster={(cluster) => {
-                    setFiltersState((filters) => ({
-                      ...filters,
-                      clusters: filters.clusters[cluster]
-                        ? omit(filters.clusters, cluster)
-                        : { ...filters.clusters, [cluster]: true },
-                    }));
-                  }}
-                  activeTab={activeTab}
-                />
-              </div>
+          )}
+          <GraphTitle filters={filtersState} activeTab={activeTab} dataReady={dataReady} />
+          {dataReady && (
+            <div className="panels">
+              <SearchField filters={filtersState} />
+              <DescriptionPanel activeTab={activeTab} />
+              <ClustersPanel
+                clusters={dataset.clusters}
+                filters={filtersState}
+                setClusters={(clusters) =>
+                  setFiltersState((filters) => ({
+                    ...filters,
+                    clusters,
+                  }))
+                }
+                toggleCluster={(cluster) => {
+                  setFiltersState((filters) => ({
+                    ...filters,
+                    clusters: filters.clusters[cluster]
+                      ? omit(filters.clusters, cluster)
+                      : { ...filters.clusters, [cluster]: true },
+                  }));
+                }}
+                activeTab={activeTab}
+              />
             </div>
-          </>
-        )}
+          )}
+        </div>
       </SigmaContainer>
     </div>
   );

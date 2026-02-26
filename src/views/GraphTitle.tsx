@@ -12,7 +12,7 @@ const TITLES = {
   descriptions: "Topics discussed at NICAR conference sessions",
 };
 
-const GraphTitle: FC<{ filters: FiltersState; activeTab: "speakers" | "descriptions" }> = ({ filters, activeTab }) => {
+const GraphTitle: FC<{ filters: FiltersState; activeTab: "speakers" | "descriptions"; dataReady: boolean }> = ({ filters, activeTab, dataReady }) => {
   const sigma = useSigma();
   const graph = sigma.getGraph();
 
@@ -27,24 +27,29 @@ const GraphTitle: FC<{ filters: FiltersState; activeTab: "speakers" | "descripti
       graph.forEachEdge((_, _2, _3, _4, source, target) => !source.hidden && !target.hidden && index.edges++);
       setVisibleItems(index);
     });
-  }, [filters]);
+  }, [filters, graph, dataReady]);
+
+  // Only show counts if graph has nodes (prevents showing 0 during loading)
+  const hasNodes = graph.order > 0;
 
   return (
     <div className="graph-title">
       <h2>{TITLES[activeTab]}</h2>
-      <h3>
-        <i>
-          {graph.order} node{graph.order > 1 ? "s" : ""}{" "}
-          {visibleItems.nodes !== graph.order
-            ? ` (only ${prettyPercentage(visibleItems.nodes / graph.order)} visible)`
-            : ""}
-          , {graph.size} edge
-          {graph.size > 1 ? "s" : ""}{" "}
-          {visibleItems.edges !== graph.size
-            ? ` (only ${prettyPercentage(visibleItems.edges / graph.size)} visible)`
-            : ""}
-        </i>
-      </h3>
+      {hasNodes && (
+        <h3>
+          <i>
+            {graph.order} node{graph.order > 1 ? "s" : ""}{" "}
+            {visibleItems.nodes !== graph.order
+              ? ` (only ${prettyPercentage(visibleItems.nodes / graph.order)} visible)`
+              : ""}
+            , {graph.size} edge
+            {graph.size > 1 ? "s" : ""}{" "}
+            {visibleItems.edges !== graph.size
+              ? ` (only ${prettyPercentage(visibleItems.edges / graph.size)} visible)`
+              : ""}
+          </i>
+        </h3>
+      )}
     </div>
   );
 };
