@@ -112,7 +112,16 @@ const Root: FC = () => {
     );
   }
 
-  if (!dataset) return null;
+  if (!dataset) {
+    return (
+      <div id="app-root">
+        <Navbar activeTab={activeTab} onTabChange={setActiveTab} />
+        <div className="contents" style={{ padding: "1em", marginTop: "var(--navbar-height)" }}>
+          Loading…
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div id="app-root" className={showContents ? "show-contents" : ""}>

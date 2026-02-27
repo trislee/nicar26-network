@@ -399,7 +399,6 @@ ul > li {
   font-size: 1em;
   font-family: "Public Sans", sans-serif;
   cursor: pointer;
-  transition: var(--transition);
 }
 .navbar-tab:hover {
   opacity: var(--hover-opacity);
@@ -467,7 +466,6 @@ ul > li {
   font-family: "Public Sans", sans-serif;
   cursor: pointer;
   text-align: left;
-  transition: var(--transition);
 }
 .navbar-mobile-tab:hover {
   background: var(--cream);
