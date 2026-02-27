@@ -14,7 +14,7 @@ In the `scripts/` subdirectory, you can run Python scripts that were used to gen
 
 ### `00__download_schedules.py`
 
-Downloads all NICAR schedules between 2015 and 2026. I couldn't find the 2021 schedule online, so I asked the conference organizers, who kindly sent me a copy.
+Downloads all NICAR schedules between 2015 and 2026. I couldn't find the 2021 schedule online (it was remote because of COVID), so I asked the conference organizers, who kindly sent me a copy.
 
 ### `01__process_speakers.py`
 
