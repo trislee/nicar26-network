@@ -13,7 +13,7 @@ export default defineConfig({
         buildMode: true,
       },
     }),
-  ],
+    ],
   server: {
     open: false,
     port: 3000,
