@@ -4,7 +4,7 @@ This project shows two [interactive visualizatiosns](https://nicar.network) of d
 
 It was developed for my NICAR 2026 Lightning Talk, forked from an excellent [sigma.js demo](https://github.com/jacomyal/sigma.js/tree/main/packages/demo). It's built using [Vite](https://vitejs.dev/), and uses [react-sigma](https://sim51.github.io/react-sigma/), to interface sigma.js with React.
 
-You can view the live visualization [here](https://nicar.network). With GitHub pages configured, after making changes to the `main` branch, you need to run the command `npm run deploy` for the latest changes to be reflected in the live visualization.
+You can view the live visualization [here](https://nicar.network). With GitHub pages configured and the `pages.yml` workflow, new pushes should automatically be deployed.
 
 I made changes to the sigma.js demo to make it a standalone website, including adding a navbar to toggle between the two network visualizations, and removing some unused features.
 
